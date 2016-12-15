@@ -16,6 +16,16 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+//Require CORS to enable cross-domain communication
+const cors = require('cors')
+
+//configures CORS option to allow only our REACT server to communicate
+const corsOptions = {
+  origin: 'https://g-lsh.github.io/client-side-basketball-app/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors())
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,9 +48,11 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
-// Home page
+// Test connection
 app.get("/", (req, res) => {
-  res.render("index");
+  res.status(200).send("Connection established!");
+  console.log("Request from react received")
+
 });
 
 app.listen(PORT, () => {
