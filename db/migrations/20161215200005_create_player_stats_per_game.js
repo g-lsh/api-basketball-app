@@ -12,6 +12,7 @@ exports.up = function(knex, Promise) {
     table.integer('FGM')
     table.integer('FTA')
     table.integer('FTM')
+    table.integer('TPT')
     table.integer('OREB')
     table.integer('DREB')
     table.integer('AST')
