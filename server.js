@@ -16,6 +16,8 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const teamsRoutes = require("./routes/teams");
+const customTeamRoutes = require("./routes/custom_teams");
 //Require CORS to enable cross-domain communication
 const cors = require('cors')
 
@@ -35,18 +37,22 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
+
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
-app.use(express.static("public"));
+
+// app.use("/styles", sass({
+//   src: __dirname + "/styles",
+//   dest: __dirname + "/public/styles",
+//   debug: true,
+//   outputStyle: 'expanded'
+// }));
+// app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+app.use("/users", usersRoutes(knex));
+app.use("/teams", teamsRoutes(knex));
+// app.use("/custom_teams", usersRoutes(knex));
 
 // Test connection
 app.get("/", (req, res) => {
