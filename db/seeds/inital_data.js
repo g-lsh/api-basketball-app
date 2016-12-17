@@ -9,35 +9,38 @@ const custom_teams = require("../initial-data/custom_teams/custom_teams.js")
 
 const waterfall = require("async/waterfall")
 
-exports.seed = function(knex, Promise) {
-  waterfall([
-  (callback) => {
-    console.log("step1")
-    users.seed(knex, Promise, callback)
-  },
-  (users, callback) => {
-    console.log("step 2")
-    games.seed(knex, Promise, users, callback)
-  }], (err, result) => {
-    console.log("Done", err)
-  })
-}
-
-
 // exports.seed = function(knex, Promise) {
-//   return users.seed(knex, Promise)
-//   .then(() => {
-//     return teams.seed(knex, Promise)
-//   }).then(() => {
-//     return custom_teams.seed(knex, Promise)
-//   }).then(() => {
-//     console.log("custom_teams")
-//     return players.seed(knex, Promise)
-//   }).then (() => {
-//     console.log("players")
-//     return games.seed(knex, Promise)
-//   }).then (() => {
-//     console.log("games")
-//     player_stats_per_game(knex, Promise)
+//   waterfall([
+//   (callback) => {
+//     console.log("step1")
+//     users.seed(knex, Promise).then((users) => {
+//       console.log("users", users)
+//     })
+//   },
+//   (users, callback) => {
+//     console.log("step 2")
+//     games.seed(knex, Promise, users, callback)
+//   }], (err, result) => {
+//     console.log("Done", err)
 //   })
 // }
+
+// const users = []
+
+exports.seed = function(knex, Promise) {
+  return users.seed(knex, Promise)
+  .then((users) => {
+    return teams.seed(knex, Promise, users)
+  }).then((users, teams) => {
+    return custom_teams.seed(knex, Promise, users, teams)
+  }).then((users, teams, custom_teams) => {
+    console.log("custom_teams")
+    return players.seed(knex, Promise, users, teams, custom_teams)
+  }).then ((users, teams, custom_teams, players) => {
+    console.log("players")
+    return games.seed(knex, Promise, users, teams, custom_teams, players)
+  }).then ((users, teams, custom_teams, players, games) => {
+    console.log("games")
+    player_stats_per_game.seed(knex, Promise, users, teams, custom_teams, players, games)
+  })
+}
