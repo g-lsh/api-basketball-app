@@ -14,6 +14,13 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+//Nba API modules
+const nbaApi      = require('./nbaApi/nbaApi.js')
+
+//HTTP client
+const axios = require('axios');
+// const fetch = require('node-fetch')
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const teamsRoutes = require("./routes/teams");
@@ -58,8 +65,15 @@ app.use("/teams", teamsRoutes(knex));
 app.get("/", (req, res) => {
   res.status(200).send("Connection established!");
   console.log("Request from react received")
-
 });
+
+// nbaApi.getTeams(knex, null)
+// nbaApi.getTeamStats(knex, 1610612746, null)
+// nbaApi.getTeamBoxscore(knex, null)
+nbaApi.getTeamPlayer(knex, 1610612763, null)
+// nbaApi.getAdvancedPlayerStats(knex, 2248, null)
+// nbaApi.getPlayerVuStats(knex, 1897, null)
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
