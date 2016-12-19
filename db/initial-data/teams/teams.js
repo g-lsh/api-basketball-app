@@ -1,6 +1,8 @@
+
+const nbaApi = require('./nbaApi/nbaApi.js')
+
 exports.seed = function(knex, Promise, users_ids) {
 
-console.log("users_ids in teams table", users_ids.map(function(id){ return id[0]}))
   return Promise.all ([
     knex('teams').insert ({
       name: "Raptors",
