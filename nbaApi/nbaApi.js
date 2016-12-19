@@ -58,7 +58,6 @@ const getAdvancedPlayerStats = (knex, player_id, callback) => {
   });
 }
 
-
 const getTeamStats = (knex, team_id, callback) => {
 
   axios({
@@ -92,6 +91,26 @@ const getTeamBoxscore = (knex, callback) => {
   }).then((response) => {
     // callback(response.data)
     console.log("data from getTeamBoxscore:", response.data)
+  }).catch(function (error) {
+    console.log(error);
+  });
+}
+
+const getPlayerBoxscore = (knex, callback) => {
+
+  axios({
+  method: 'post',
+  url: `/boxscore/player`,
+    params: {
+    api_key: apiKey,
+    team_id: 1610612746,
+    opponent_id:1610612744,
+    season: "2009"
+    },
+  baseURL: baseUrl
+  }).then((response) => {
+    // callback(response.data)
+    console.log("data from getPlayerBoxscore:", response.data)
   }).catch(function (error) {
     console.log(error);
   });
@@ -141,7 +160,8 @@ module.exports = {
   getTeamBoxscore: getTeamBoxscore,
   getTeamPlayer: getTeamPlayer,
   getAdvancedPlayerStats: getAdvancedPlayerStats,
-  getPlayerVuStats: getPlayerVuStats
+  getPlayerVuStats: getPlayerVuStats,
+  getPlayerBoxscore: getPlayerBoxscore
 }
 
 

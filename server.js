@@ -70,10 +70,10 @@ app.get("/", (req, res) => {
 // nbaApi.getTeams(knex, null)
 // nbaApi.getTeamStats(knex, 1610612746, null)
 // nbaApi.getTeamBoxscore(knex, null)
-nbaApi.getTeamPlayer(knex, 1610612763, null)
+// nbaApi.getTeamPlayer(knex, 1610612763, null)
 // nbaApi.getAdvancedPlayerStats(knex, 2248, null)
 // nbaApi.getPlayerVuStats(knex, 1897, null)
-
+nbaApi.getPlayerBoxscore(knex, null)
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
