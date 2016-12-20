@@ -5,7 +5,7 @@ const apiKey = process.env.PRO_BASKETBALL_API
 const baseUrl = `http://api.probasketballapi.com`
 
 
-const getTeams = (knex, callback) => {
+const getTeams = (callback, db) => {
 
   axios({
   method: 'post',
@@ -15,32 +15,31 @@ const getTeams = (knex, callback) => {
     },
   baseURL: baseUrl
   }).then((response) => {
-    // callback(response.data)
+    callback(response.data, db)
     console.log("data from getTeams:", response.data)
   }).catch(function (error) {
     console.log(error);
   });
 }
 
-const getTeamPlayer = (knex, team_id, callback) => {
+const getPlayers = (callback, db) => {
 
   axios({
   method: 'post',
   url: '/player',
     params: {
     api_key: apiKey,
-    team_id: team_id
     },
   baseURL: baseUrl
   }).then((response) => {
-    // callback(response.data)
+    callback(response.data, db)
     console.log("data from getPlayers:", response.data)
   }).catch(function (error) {
     console.log(error);
   });
 }
 
-const getAdvancedPlayerStats = (knex, player_id, callback) => {
+const getAdvancedPlayerStats = (db, player_id, callback) => {
 
   axios({
   method: 'post',
@@ -51,14 +50,14 @@ const getAdvancedPlayerStats = (knex, player_id, callback) => {
     },
   baseURL: baseUrl
   }).then((response) => {
-    // callback(response.data)
+    callback(response.data)
     console.log("data from getAdvancedPlayerStats:", response.data)
   }).catch(function (error) {
     console.log(error);
   });
 }
 
-const getTeamStats = (knex, team_id, callback) => {
+const getTeamStats = (db, team_id, callback) => {
 
   axios({
   method: 'post',
@@ -77,7 +76,7 @@ const getTeamStats = (knex, team_id, callback) => {
   });
 }
 
-const getTeamBoxscore = (knex, callback) => {
+const getTeamBoxscore = (db, callback) => {
 
   axios({
   method: 'post',
@@ -96,7 +95,7 @@ const getTeamBoxscore = (knex, callback) => {
   });
 }
 
-const getPlayerBoxscore = (knex, callback) => {
+const getPlayerBoxscore = (db, callback) => {
 
   axios({
   method: 'post',
@@ -116,7 +115,7 @@ const getPlayerBoxscore = (knex, callback) => {
   });
 }
 
-const getPlayerVuStats = (knex, player_id, callback) => {
+const getPlayerVuStats = (db, player_id, callback) => {
 
   axios({
   method: 'post',
@@ -134,7 +133,7 @@ const getPlayerVuStats = (knex, player_id, callback) => {
   });
 }
 
-// const getPlayerStats = (knex, team_id, callback) => {
+// const getPlayerStats = (db, team_id, callback) => {
 
 //   axios({
 //   method: 'post',
@@ -156,9 +155,9 @@ const getPlayerVuStats = (knex, player_id, callback) => {
 
 module.exports = {
   getTeams: getTeams,
+  getPlayers: getPlayers,
   getTeamStats: getTeamStats,
   getTeamBoxscore: getTeamBoxscore,
-  getTeamPlayer: getTeamPlayer,
   getAdvancedPlayerStats: getAdvancedPlayerStats,
   getPlayerVuStats: getPlayerVuStats,
   getPlayerBoxscore: getPlayerBoxscore

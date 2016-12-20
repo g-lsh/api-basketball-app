@@ -16,6 +16,7 @@ const knexLogger  = require('knex-logger');
 
 //Nba API modules
 const nbaApi      = require('./nbaApi/nbaApi.js')
+const nbaApiMongodb = require('./nbaApi/nbaApiMongodb')
 
 //HTTP client
 const axios = require('axios');
@@ -33,6 +34,29 @@ const corsOptions = {
   origin: 'https://g-lsh.github.io/client-side-basketball-app/',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+//Connection to MongoDB
+const {MongoClient} = require("mongodb");
+const MONGODB_URI = "mongodb://localhost:27017/basketball"
+
+const db = MongoClient.connect(MONGODB_URI, (err, db) => {
+  if (err) {
+    console.error(`Failed to connect: ${MONGODB_URI}`);
+    throw err;
+  }
+
+  const seedTeams = (teams, db) => {
+    db.collection("teams").insert(teams)
+  }
+
+  const seedPLayers = (players, db) => {
+    db.collection("players").insert(players)
+  }
+
+  // nbaApiMongodb.getTeams(seedTeams, db)
+  // nbaApiMongodb.getPlayers(seedPLayers, db)
+})
+
 
 app.use(cors())
 
@@ -70,10 +94,10 @@ app.get("/", (req, res) => {
 // nbaApi.getTeams(knex, null)
 // nbaApi.getTeamStats(knex, 1610612746, null)
 // nbaApi.getTeamBoxscore(knex, null)
-// nbaApi.getTeamPlayer(knex, 1610612763, null)
+// nbaApi.getTeamPlayer(knex, null, null)
 // nbaApi.getAdvancedPlayerStats(knex, 2248, null)
 // nbaApi.getPlayerVuStats(knex, 1897, null)
-nbaApi.getPlayerBoxscore(knex, null)
+// nbaApi.getPlayerBoxscore(knex, null)
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
