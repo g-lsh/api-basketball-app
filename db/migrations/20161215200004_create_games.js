@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
     table.integer('team_B_id')
     table.integer('season')
     table.date('date')
-    table.foreign('team_A_id').references('teams.id')
-    table.foreign('team_B_id').references('teams.id')
+    // table.foreign('team_A_id').references('teams.id')
+    // table.foreign('team_B_id').references('teams.id')
   });
 }
 exports.down = function(knex, Promise) {

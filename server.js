@@ -15,16 +15,28 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 //Nba API modules
-const nbaApi      = require('./nbaApi/nbaApi.js')
+const api = require('./nbaApi/nbaApi.js');
 
 //HTTP client
 const axios = require('axios');
 // const fetch = require('node-fetch')
 
-// Seperated Routes for each Resource
+//Seed teams
+// require('./db/seeds/seed_teams.js')(knex)
+
+//Seed players
+// require('./db/seeds/seed_players.js')(knex)
+
+//Seed players boxscores
+// require('./db/seeds/seed_player_boxscores.js')(knex)
+
+// Seperated Routes for each resource
 const usersRoutes = require("./routes/users");
 const teamsRoutes = require("./routes/teams");
-const customTeamRoutes = require("./routes/custom_teams");
+const playersRoutes = require("./routes/players");
+
+// const customTeamRoutes = require("./routes/custom_teams");
+
 //Require CORS to enable cross-domain communication
 const cors = require('cors')
 
@@ -34,46 +46,59 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(cors())
 
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
+//Connection to MongoDB
+// const {MongoClient} = require("mongodb");
+// const MONGODB_URI = "mongodb://localhost:27017/basketball"
 
-// Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
+// const db = MongoClient.connect(MONGODB_URI, (err, db) => {
+//   if (err) {
+//     console.error(`Failed to connect: ${MONGODB_URI}`);
+//     throw err;
+//   }
 
-// app.set("view engine", "ejs");
+  app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
+  // Load the logger first so all (static) HTTP requests are logged to STDOUT
+  // 'dev' = Concise output colored by response status for development use.
+  //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+  app.use(morgan('dev'));
 
-// app.use("/styles", sass({
-//   src: __dirname + "/styles",
-//   dest: __dirname + "/public/styles",
-//   debug: true,
-//   outputStyle: 'expanded'
-// }));
-// app.use(express.static("public"));
+  // Log knex SQL queries to STDOUT as well
+  app.use(knexLogger(knex));
 
-// Mount all resource routes
-app.use("/users", usersRoutes(knex));
-app.use("/teams", teamsRoutes(knex));
-// app.use("/custom_teams", usersRoutes(knex));
+  // app.set("view engine", "ejs");
 
-// Test connection
-app.get("/", (req, res) => {
-  res.status(200).send("Connection established!");
-  console.log("Request from react received")
-});
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-// nbaApi.getTeams(knex, null)
-// nbaApi.getTeamStats(knex, 1610612746, null)
-// nbaApi.getTeamBoxscore(knex, null)
-// nbaApi.getTeamPlayer(knex, 1610612763, null)
-// nbaApi.getAdvancedPlayerStats(knex, 2248, null)
-// nbaApi.getPlayerVuStats(knex, 1897, null)
+  // app.use("/styles", sass({
+  //   src: __dirname + "/styles",
+  //   dest: __dirname + "/public/styles",
+  //   debug: true,
+  //   outputStyle: 'expanded'
+  // }));
+  // app.use(express.static("public"));
 
+  // Mount all resource routes
+  app.use("/users", usersRoutes(knex));
+  app.use("/teams", teamsRoutes(knex));
+  app.use("/players", playersRoutes(knex));
+  // app.use("/custom_teams", usersRoutes(knex));
+  // app.use("/api", apiRoutes())
+
+  // Test connection
+  app.get("/", (req, res) => {
+    res.status(200).send("Connection established!");
+  });
+
+  // api.getTeams(knex, console.log)
+  // api.getTeamStats(knex, 1610612746, null)
+  // api.getTeamBoxscore(knex, null)
+  // api.getTeamPlayers(null, console.log)
+  // api.getAdvancedPlayerStats(knex, 2248, null)
+  // api.getPlayerVuStats(knex, 1897, null)
+  // api.getPlayerBoxscore(200768, console.log)
+// }
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
