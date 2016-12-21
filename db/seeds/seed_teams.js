@@ -18,15 +18,15 @@ const insertTeams = (knex, teamsJSON) => {
   .insert(collection, '*')
   .into("teams")
   .then(function(args) {
-    debugger
+    console.log("Teams inserted into database")
   }).catch(function(err) {
-    debugger
+    console.log(err)
   })
 }
 
 module.exports = function(knex) {
 
-  api.getTeams(null, (teamsJSON) => {
+  api.getTeams((teamsJSON) => {
     let teamsRecord = insertTeams(knex, teamsJSON)
   })
 }
