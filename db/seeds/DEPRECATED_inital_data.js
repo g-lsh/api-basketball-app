@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 
 // const users = require("../initial-data/users/users.js")
 // const games = require("../initial-data/games/games.js")
@@ -45,31 +45,3 @@
 //     player_stats_per_game.seed(knex, Promise, users, teams, custom_teams, players, games)
 //   })
 // }
-
-
-const api = require('../../nbaApi/nbaApi.js')
-
-const mapperFunction = (teamJSON) => {
-  return {
-    api_id: teamJSON.id,
-    location: teamJSON.city,
-    nba_code: teamJSON.abbreviation
-  }
-}
-
-const insertTeams = (knex, teamsJSON) => {
-  let collection = teamsJSON.map(mapperFunction)
-
-  console.log(collection)
-  return knex
-  .insert(collection, '*')
-  .into("teams")
-}
-
-module.exports = function(knex) {
-
-  api.getTeams(null, (teamsJSON) => {
-    let teamsRecord = insertTeams(knex, teamsJSON)
-    console.log(teamsRecord)
-  })
-}

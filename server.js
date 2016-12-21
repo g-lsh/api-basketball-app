@@ -22,10 +22,17 @@ const nbaApiMongodb = require('./nbaApi/nbaApiMongodb')
 const axios = require('axios');
 // const fetch = require('node-fetch')
 
+//Seed teams
+// require('./db/seeds/seed_teams.js')(knex)
+
+//Seed players
+// require('./db/seeds/seed_players.js')(knex)
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const teamsRoutes = require("./routes/teams");
 const customTeamRoutes = require("./routes/custom_teams");
+
 //Require CORS to enable cross-domain communication
 const cors = require('cors')
 
@@ -37,8 +44,8 @@ const corsOptions = {
 
 
 //Connection to MongoDB
-const {MongoClient} = require("mongodb");
-const MONGODB_URI = "mongodb://localhost:27017/basketball"
+// const {MongoClient} = require("mongodb");
+// const MONGODB_URI = "mongodb://localhost:27017/basketball"
 
 // const db = MongoClient.connect(MONGODB_URI, (err, db) => {
 //   if (err) {
@@ -87,16 +94,7 @@ const MONGODB_URI = "mongodb://localhost:27017/basketball"
   // nbaApi.getPlayerVuStats(knex, 1897, null)
   // nbaApi.getPlayerBoxscore(knex, null)
 // }
-// require('./db/seeds/inital_data.js')(knex)
 
-console.log(knex('teams')
-.insert(
-  { api_id: 1610612766,
-    location: 'Charlotte',
-    name: 'Hornets',
-    nba_code: 'CHA'
-  }
-  ))
 
 
 app.listen(PORT, () => {
