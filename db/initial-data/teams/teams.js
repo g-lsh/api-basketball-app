@@ -1,5 +1,5 @@
 
-const nbaApi = require('./nbaApi/nbaApi.js')
+// const nbaApi = require('./nbaApi/nbaApi.js')
 
 exports.seed = function(knex, Promise, users_ids) {
 
