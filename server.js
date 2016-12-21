@@ -15,8 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 //Nba API modules
-const nbaApi      = require('./nbaApi/nbaApi.js')
-const nbaApiMongodb = require('./nbaApi/nbaApiMongodb')
+const api = require('./nbaApi/nbaApi.js');
 
 //HTTP client
 const axios = require('axios');
@@ -28,10 +27,15 @@ const axios = require('axios');
 //Seed players
 // require('./db/seeds/seed_players.js')(knex)
 
-// Seperated Routes for each Resource
+//Seed players boxscores
+// require('./db/seeds/seed_player_boxscores.js')(knex)
+
+// Seperated Routes for each resource
 const usersRoutes = require("./routes/users");
 const teamsRoutes = require("./routes/teams");
-const customTeamRoutes = require("./routes/custom_teams");
+const playersRoutes = require("./routes/players");
+
+// const customTeamRoutes = require("./routes/custom_teams");
 
 //Require CORS to enable cross-domain communication
 const cors = require('cors')
@@ -53,7 +57,7 @@ const corsOptions = {
 //     throw err;
 //   }
 
-  app.use(cors())
+  app.use(cors());
 
   // Load the logger first so all (static) HTTP requests are logged to STDOUT
   // 'dev' = Concise output colored by response status for development use.
@@ -78,6 +82,7 @@ const corsOptions = {
   // Mount all resource routes
   app.use("/users", usersRoutes(knex));
   app.use("/teams", teamsRoutes(knex));
+  app.use("/players", playersRoutes(knex));
   // app.use("/custom_teams", usersRoutes(knex));
   // app.use("/api", apiRoutes())
 
@@ -86,16 +91,14 @@ const corsOptions = {
     res.status(200).send("Connection established!");
   });
 
-  // nbaApi.getTeams(knex, console.log)
-  // nbaApi.getTeamStats(knex, 1610612746, null)
-  // nbaApi.getTeamBoxscore(knex, null)
-  // nbaApi.getTeamPlayer(knex, null, null)
-  // nbaApi.getAdvancedPlayerStats(knex, 2248, null)
-  // nbaApi.getPlayerVuStats(knex, 1897, null)
-  // nbaApi.getPlayerBoxscore(knex, null)
+  // api.getTeams(knex, console.log)
+  // api.getTeamStats(knex, 1610612746, null)
+  // api.getTeamBoxscore(knex, null)
+  // api.getTeamPlayers(null, console.log)
+  // api.getAdvancedPlayerStats(knex, 2248, null)
+  // api.getPlayerVuStats(knex, 1897, null)
+  // api.getPlayerBoxscore(200768, console.log)
 // }
-
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

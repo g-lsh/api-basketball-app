@@ -2,6 +2,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('players', function (table) {
     table.increments('id');
+    table.integer('api_id')
     table.integer('team_id')
     table.integer('custom_team_id')
     table.string('first_name')
@@ -10,9 +11,10 @@ exports.up = function(knex, Promise) {
     table.string('college')
     table.string('height')
     table.string('weight')
-    // What do I write for the API, and Twitter API
-    table.foreign('team_id').references('teams.id')
-    table.foreign('custom_team_id').references('custom_teams.id');
+    table.date('birthdate')
+    table.string('position')
+    // table.foreign('team_id').references('teams.id')
+    // table.foreign('custom_team_id').references('custom_teams.id');
   })
 }
 
