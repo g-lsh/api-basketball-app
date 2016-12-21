@@ -27,8 +27,9 @@ const insertPlayers = (knex, playersJSON) => {
 
 module.exports = function(knex) {
 
+let team_id = 1610612761
   //team id harcoded, to be fetched from api eventually
-  api.getTeamPlayers(1610612761, (playersJSON) => {
+  api.getTeamPlayers(team_id, (playersJSON) => {
     let playersRecord = insertPlayers(knex, playersJSON)
   })
 }

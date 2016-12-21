@@ -15,11 +15,11 @@
 //     console.log("step1")
 //     users.seed(knex, Promise).then((users) => {
 //       console.log("users", users)
+//       callback(null, users)
 //     })
 //   },
 //   (users, callback) => {
-//     console.log("step 2")
-//     games.seed(knex, Promise, users, callback)
+
 //   }], (err, result) => {
 //     console.log("Done", err)
 //   })
