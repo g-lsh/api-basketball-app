@@ -15,12 +15,8 @@ const mapperFunction = (team_id, playersJSON) => {
 }
 
 const insertPlayers = (knex, playersJSON) => {
-
   knex('teams')
     .select('id')
-    //The next statement is where the flaw is, we don't want one id, we want
-    //each ones for each player. Otherwise we can just pass the team_id trough
-    //insertPlayers as an argument
     .where('api_id', playersJSON[0].team_id)
     .then((idArray) => {
       let team_id = idArray[0].id
@@ -31,15 +27,22 @@ const insertPlayers = (knex, playersJSON) => {
       }).then((data) => {
         console.log('Players inserted into database')
       });
-}
+    }
 
 
 module.exports = function(knex) {
 
-let team_id = 1610612761
-//Could implement forEach hear with all team ids and call for each, but could also
-//attempt to fetch all players and loop through them above.
-  api.getTeamPlayers(team_id, (playersJSON) => {
-    let playersRecord = insertPlayers(knex, playersJSON)
-  })
-}
+  const fetchPlayerData = (teamIdsArray) => {
+    teamIdsArray.forEach((teamIdObject) => {
+      api.getTeamPlayers(teamIdObject.api_id, (playersJSON) => {
+        let playersRecord = insertPlayers(knex, playersJSON)
+      })
+    })
+  }
+
+  knex('teams')
+    .select('api_id')
+    .then((teamIdsArray) => {
+      fetchPlayerData(teamIdsArray)
+    })
+  }
