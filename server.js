@@ -91,6 +91,8 @@ const corsOptions = {
     res.status(200).send("Connection established!");
   });
 
+  // require('./db/seeds/test.js')(knex)
+
   // api.getTeams(knex, console.log)
   // api.getTeamStats(knex, 1610612746, null)
   // api.getTeamBoxscore(knex, null)
