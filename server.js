@@ -30,6 +30,22 @@ const axios = require('axios');
 //Seed players boxscores
 // require('./db/seeds/seed_player_boxscores.js')(knex)
 
+//Seed teams logos
+// require('./db/seeds/seed_logos.js')(knex)
+
+//Seed teams background
+// require('./db/seeds/seed_background.js')(knex)
+
+//Seed teams Division
+// require('./db/seeds/seed_division.js')(knex)
+
+//Seed teams Website
+// require('./db/seeds/seed_website.js')(knex)
+
+//Seed players headShot
+// require('./db/seeds/seed_head_shot.js')(knex)
+
+
 // Seperated Routes for each resource
 const usersRoutes = require("./routes/users");
 const teamsRoutes = require("./routes/teams");
