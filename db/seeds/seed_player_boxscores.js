@@ -45,9 +45,10 @@ const insertPlayerBoxscores = (knex, playerBoxscoresJSON) => {
             console.log("Player stats inserted into the database")
             return null;
           }).catch((err) => {
-            console.log("This is the error:", })
+            console.log("This is the error:", err)
+          })
         })
-}
+      }
 
 module.exports = function(knex) {
 

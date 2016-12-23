@@ -8,9 +8,7 @@ module.exports = (knex) => {
   router.get("/:player_id", (req, res) => {
 
     const player_id = req.params.player_id
-    console.log(player_id)
 
-    console.log("Into get router for player")
     knex('players')
       .select("*")
       .where("id", player_id)
@@ -22,7 +20,7 @@ module.exports = (knex) => {
   })
 
 
-//Router for to obtain all boxscore for a give player
+//Route for to obtain all boxscore for a give player
 
   router.get("/:player_id/boxscores", (req, res) => {
     console.log("get request made for a players' boxscores")
