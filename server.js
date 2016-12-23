@@ -24,11 +24,11 @@ const axios = require('axios');
 //Seed teams
 // require('./db/seeds/seed_teams.js')(knex)
 
-//Seed players
+// //Seed players
 // require('./db/seeds/seed_players.js')(knex)
 
 //Seed players boxscores
-// require('./db/seeds/seed_player_boxscores.js')(knex)
+require('./db/seeds/seed_player_boxscores.js')(knex)
 
 //Seed teams logos
 // require('./db/seeds/seed_logos.js')(knex)
@@ -107,13 +107,15 @@ const corsOptions = {
     res.status(200).send("Connection established!");
   });
 
+  // require('./db/seeds/test.js')(knex)
+
   // api.getTeams(knex, console.log)
   // api.getTeamStats(knex, 1610612746, null)
   // api.getTeamBoxscore(knex, null)
-  // api.getTeamPlayers(null, console.log)
+  // api.getTeamPlayers(1610612764, console.log)
   // api.getAdvancedPlayerStats(knex, 2248, null)
   // api.getPlayerVuStats(knex, 1897, null)
-  // api.getPlayerBoxscore(200768, console.log)
+  // api.getPlayerBoxscore(1610612764, null, 2016, console.log)
 // }
 
 app.listen(PORT, () => {

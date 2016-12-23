@@ -1,35 +1,48 @@
 const api = require('../../nbaApi/nbaApi.js')
 
-const mapperFunction = (playerJSON) => {
-  return {
-    api_id: playerJSON.id,
-    team_id: 25,
-    first_name: playerJSON.first_name,
-    last_name: playerJSON.last_name,
-    birthdate: playerJSON.birthdate,
-    position: playerJSON.position
-  }
+const mapperFunction = (team_id, playersJSON) => {
+  let collection = playersJSON.map((playerJSON) => {
+    return {
+      api_id: playerJSON.id,
+      team_id: team_id,
+      first_name: playerJSON.first_name,
+      last_name: playerJSON.last_name,
+      birthdate: playerJSON.birthdate,
+      position: playerJSON.position
+    }
+  })
+  return collection
 }
 
 const insertPlayers = (knex, playersJSON) => {
-  let collection = playersJSON.map(mapperFunction)
-
-  knex
-  .insert(collection)
-  .into("players")
-  .then(function(args) {
-    console.log("Players inserted into database")
-  }).catch(function(err) {
-    console.log(err)
-  })
-}
+  knex('teams')
+    .select('id')
+    .where('api_id', playersJSON[0].team_id)
+    .then((idArray) => {
+      let team_id = idArray[0].id
+      const collection = mapperFunction(team_id, playersJSON)
+      // execute and return the knex query
+      return knex('players')
+        .insert(collection)
+      }).then((data) => {
+        console.log('Players inserted into database')
+      });
+    }
 
 
 module.exports = function(knex) {
 
-let team_id = 1610612761
-  //team id harcoded, to be fetched from api eventually
-  api.getTeamPlayers(team_id, (playersJSON) => {
-    let playersRecord = insertPlayers(knex, playersJSON)
-  })
-}
+  const fetchPlayerData = (teamIdsArray) => {
+    teamIdsArray.forEach((teamIdObject) => {
+      api.getTeamPlayers(teamIdObject.api_id, (playersJSON) => {
+        let playersRecord = insertPlayers(knex, playersJSON)
+      })
+    })
+  }
+
+  knex('teams')
+    .select('api_id')
+    .then((teamIdsArray) => {
+      fetchPlayerData(teamIdsArray)
+    })
+  }
