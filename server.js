@@ -28,7 +28,7 @@ const axios = require('axios');
 // require('./db/seeds/seed_players.js')(knex)
 
 //Seed players boxscores
-// require('./db/seeds/seed_player_boxscores.js')(knex)
+require('./db/seeds/seed_player_boxscores.js')(knex)
 
 // Seperated Routes for each resource
 const usersRoutes = require("./routes/users");
@@ -99,7 +99,7 @@ const corsOptions = {
   // api.getTeamPlayers(1610612764, console.log)
   // api.getAdvancedPlayerStats(knex, 2248, null)
   // api.getPlayerVuStats(knex, 1897, null)
-  // api.getPlayerBoxscore(200768, console.log)
+  // api.getPlayerBoxscore(1610612764, null, 2016, console.log)
 // }
 
 app.listen(PORT, () => {

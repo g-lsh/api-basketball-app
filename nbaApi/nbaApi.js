@@ -36,21 +36,20 @@ const getTeamPlayers = (team_id, callback) => {
   });
 }
 
-const getPlayerBoxscore = (player_id, callback) => {
+const getPlayerBoxscore = (team_id, player_id, season, callback) => {
   return  axios({
     method: 'post',
     url: `/boxscore/player`,
       params: {
       api_key: apiKey,
+      team_id: team_id,
       player_id: player_id,
-      season: 2016
+      season: season
       },
     baseURL: baseUrl
     }).then((response) => {
       callback(response.data)
-    }).catch(function (error) {
-      console.log(error);
-  });
+    })
 }
 
 // const getAdvancedPlayerStats = (knex, player_id, callback) => {
