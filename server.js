@@ -28,7 +28,7 @@ const axios = require('axios');
 // require('./db/seeds/seed_players.js')(knex)
 
 //Seed players boxscores
-require('./db/seeds/seed_player_boxscores.js')(knex)
+// require('./db/seeds/seed_player_boxscores.js')(knex)
 
 //Seed teams logos
 // require('./db/seeds/seed_logos.js')(knex)

@@ -45,15 +45,16 @@ const insertPlayerBoxscores = (knex, playerBoxscoresJSON) => {
             console.log("Player stats inserted into the database")
             return null;
           }).catch((err) => {
-            console.log("This is the error:", })
+            console.log("This is the error:", err)
         })
-}
+})
+} 
 
 module.exports = function(knex) {
 
   const fetchPlayerBoxscores = (playersApiIdsArray, times = 4) => {
 
-    if (times === 0) return playersApiIdsArray
+    if (times === 0) {return playersApiIdsArray}
 
     let errors = []
 
@@ -85,4 +86,5 @@ module.exports = function(knex) {
       console.log(result)
       return result
     })
+
   }
