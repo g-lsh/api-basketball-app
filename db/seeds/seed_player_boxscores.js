@@ -46,9 +46,10 @@ const insertPlayerBoxscores = (knex, playerBoxscoresJSON) => {
             return null;
           }).catch((err) => {
             console.log("This is the error:", err)
-        })
-})
+            })
+    })
 } 
+
 
 module.exports = function(knex) {
 

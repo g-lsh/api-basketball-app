@@ -21,6 +21,15 @@ const api = require('./nbaApi/nbaApi.js');
 const axios = require('axios');
 // const fetch = require('node-fetch')
 
+//Require CORS to enable cross-domain communication
+const cors = require('cors')
+
+//configures CORS option to allow only our REACT server to communicate
+const corsOptions = {
+  origin: 'https://g-lsh.github.io/client-side-basketball-app/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 //Seed teams
 // require('./db/seeds/seed_teams.js')(knex)
 
@@ -44,23 +53,6 @@ const axios = require('axios');
 
 //Seed players headShot
 // require('./db/seeds/seed_head_shot.js')(knex)
-
-
-// Seperated Routes for each resource
-const usersRoutes = require("./routes/users");
-const teamsRoutes = require("./routes/teams");
-const playersRoutes = require("./routes/players");
-
-// const customTeamRoutes = require("./routes/custom_teams");
-
-//Require CORS to enable cross-domain communication
-const cors = require('cors')
-
-//configures CORS option to allow only our REACT server to communicate
-const corsOptions = {
-  origin: 'https://g-lsh.github.io/client-side-basketball-app/',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
 
 
 //Connection to MongoDB
@@ -96,9 +88,10 @@ const corsOptions = {
   // app.use(express.static("public"));
 
   // Mount all resource routes
-  app.use("/users", usersRoutes(knex));
-  app.use("/teams", teamsRoutes(knex));
-  app.use("/players", playersRoutes(knex));
+  app.use("/users", require("./routes/users")(knex));
+  app.use("/teams", require("./routes/teams")(knex));
+  app.use("/players", require("./routes/players")(knex));
+  app.use("/scrape", require("./routes/scrape")(knex));
   // app.use("/custom_teams", usersRoutes(knex));
   // app.use("/api", apiRoutes())
 
