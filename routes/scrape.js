@@ -8,7 +8,6 @@ const router  = express.Router();
 
 
 const insertHeadshot = (knex, player) => {
-  debugger;
   knex("players")
     .where({
       first_name: player.first_name,
@@ -50,19 +49,19 @@ module.exports = (knex) => {
           //use better code here to get name and image
           let name = data.children()[1].attribs.title;
           headshot += data.children().children('.nba-player-index__image').children().children().attr('data-src');
-
           if (name.split(" ").length === 2) {
-            let [first_name, last_name] = name.split(" ")
+            let [first_name, last_name] = name.split(" ");
             player.headshot = headshot;
             player.first_name = first_name;
             player.last_name = last_name;
           } else {
-            unhandled_players.push(name)
+            unhandled_players.push(name);
           }
-          insertHeadshot(knex, player)
+          insertHeadshot(knex, player);
         })
       return unhandled_players;
       } 
+
     })
   })
   return router;
