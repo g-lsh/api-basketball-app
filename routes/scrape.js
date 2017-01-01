@@ -61,7 +61,8 @@ module.exports = (knex) => {
           }
           insertHeadshot(knex, player)
         })
-      } return unhandled_players;
+      return unhandled_players;
+      } 
     })
   })
   return router;
