@@ -13,7 +13,7 @@ module.exports = (knex) => {
     }
 
     let {email, password} = req.body;
-
+    
     const checkEmail  = (cb) => {
       let existingEmail = "";
       knex('users')
