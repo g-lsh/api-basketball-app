@@ -13,7 +13,7 @@ module.exports = (knex) => {
     }
 
     let {email, password} = req.body;
-    
+
     const checkEmail  = (cb) => {
       let existingEmail = "";
       knex('users')
@@ -38,6 +38,7 @@ module.exports = (knex) => {
          password: bcrypt.hashSync(password, 10)
        }, 'id')
         .then((arrayOfId) => {
+          debugger;
           let user_id = arrayOfId[0];
           res.json(user_id);
         })
