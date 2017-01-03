@@ -6,15 +6,7 @@ const bcrypt = require('bcrypt');
 
 module.exports = (knex) => {
 
-  router.post("/signup", (req, res) => {
-    if (!req.body) {
-      console.log("No body in the request");
-      res.status(400).send("The body of the request is empty");
-    }
-
-    let {email, password} = req.body;
-    debugger;
-    const checkEmail  = (cb) => {
+  const checkEmail  = (cb, email, password, bool) => {
       let existingEmail = "";
       knex('users')
         .select('id', 'email')
@@ -22,34 +14,75 @@ module.exports = (knex) => {
         .then((userArray) => {
           if (userArray[0]) {
             existingEmail = userArray[0].email;
+            id = userArray[0].id;
           }
-          if (!existingEmail) {
-            cb();
+          if (existingEmail) {
+            if (bool) {
+              cb(existingEmail, id, password, true);
+            } else {
+              cb(email, id, password, false);
+            }
           } else {
-            res.status(400).send(`The email adress: ${existingEmail} already exists.`);
-          }
+              if (bool) {
+                cb(email, id, password, false)
+              } else {
+                cb(email, id, password, true)
+              }
+            }
         });
+  }
+
+  router.post("/signup", (req, res) => {
+    if (!Object.keys(req.body).length) {
+      res.status(400).send("The body of the request is empty");
+      return
     }
 
-    const insertNewUser = () => {
-      knex('users')
-        .insert({
-         email: email,
-         password: bcrypt.hashSync(password, 10)
-       }, 'id')
-        .then((arrayOfId) => {
-          debugger;
-          let user_id = arrayOfId[0];
-          res.json(user_id);
-        })
-        .catch((err) => {
-          res.status(400);
-        });
-    }
+    let {email, password} = req.body;
 
-    checkEmail(insertNewUser);
+    const insertNewUser = (email, id, password, bool) => {
+      if (!bool) {
+        res.status(400).send(`The email adress: ${existingEmail} already exists.`);
+        return
+      } else {
+        knex('users')
+          .insert({
+           email: email,
+           password: bcrypt.hashSync(password, 10)
+         }, 'id')
+          .then((arrayOfId) => {
+            let user_id = arrayOfId[0];
+            res.json(user_id);
+          })
+          .catch((err) => {
+            res.status(400);
+          });
+        }
+  }
+
+    checkEmail(insertNewUser, email, password);
 
   });
+
+  router.post("/signin", (req, res) => {
+    if (!Object.keys(req.body).length) {
+      res.status(400).send("The body of the request is empty");
+      return
+    }
+
+    let {email, password} = req.body;
+
+    const checkPassword = (email, id, password, bool) => {
+      if (bool) {
+      //password sync check
+      } else {
+      //error message, email not found in databse
+      }
+    }
+
+  })
+
+
 
   return router;
 }
