@@ -58,9 +58,9 @@ module.exports = (knex) => {
             res.status(400);
           });
         }
-  }
+    }
 
-    checkEmail(insertNewUser, email, password);
+    checkEmail(insertNewUser, email, password, false);
 
   });
 
@@ -80,6 +80,7 @@ module.exports = (knex) => {
       }
     }
 
+    checkEmail(checkPassword, email, password, true)
   })
 
 
