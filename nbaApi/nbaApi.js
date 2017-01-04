@@ -1,8 +1,8 @@
 //HTTP client
-const axios = require('axios')
+const axios = require('axios');
 // const = require('async')
-const apiKey = process.env.PRO_BASKETBALL_API
-const baseUrl = `http://api.probasketballapi.com`
+const apiKey = process.env.PRO_BASKETBALL_API;
+const baseUrl = `http://api.probasketballapi.com`;
 
 
 const getTeams = (callback) => {
@@ -14,7 +14,7 @@ const getTeams = (callback) => {
       },
     baseURL: baseUrl
     }).then((response) => {
-      callback(response.data)
+      callback(response.data);
     }).catch(function (error) {
       console.log(error);
   });
@@ -30,7 +30,7 @@ const getTeamPlayers = (team_id, callback) => {
       },
     baseURL: baseUrl
     }).then((response) => {
-      callback(response.data)
+      callback(response.data);
     }).catch(function (error) {
       console.log(error);
   });
@@ -48,8 +48,8 @@ const getPlayerBoxscore = (team_id, player_id, season, callback) => {
       },
     baseURL: baseUrl
     }).then((response) => {
-      callback(response.data)
-    })
+      callback(response.data);
+    });
 }
 
 // const getAdvancedPlayerStats = (knex, player_id, callback) => {

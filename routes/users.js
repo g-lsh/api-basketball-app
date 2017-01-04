@@ -3,16 +3,9 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-
-
-  router.post("/signup", (req, res) => {
-    if (!req.body) {
-      console.log("No body in the request");
-      res.status(400).send("The body of the request is empty");
-    }
-
-    let {email, password} = req.body;
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
+const authenticate = require('../authenticate/authenticate.js')
 
 
 /*Functions to handle user login and registration*/
@@ -45,7 +38,6 @@ const checkEmail  = (knex, cb, email, password, bool, res) => {
     });
 }
 
-
 const insertNewUser = (knex, email, id, password, bool, res) => {
   if (!bool) {
     res.status(400).send(`The email adress: ${email} already exists.`);
@@ -57,10 +49,12 @@ const insertNewUser = (knex, email, id, password, bool, res) => {
        password: bcrypt.hashSync(password, 10)
      }, 'id')
       .then((arrayOfId) => {
-        let user_id = arrayOfId[0];
-        // res.json(user_id);
-        let token = jwt.sign({email:email},'secretkeyforjwt');
-        res.json({token})
+        const user_id = arrayOfId[0];
+        const token = jwt.sign({
+          email: email,
+          user_id: user_id
+        },jwtSecret);
+        res.json({token});
       })
       .catch((err) => {
         console.log("error occured in insertNewUser:", err);
@@ -79,16 +73,21 @@ module.exports = (knex) => {
       res.status(400).send("The body of the request is empty.");
       return
     }
-    let {email, password} = req.body;
+    const {email, password} = req.body;
     checkEmail(knex, insertNewUser, email, password, false, res);
   });
 
-  router.post("/signin", (req, res) => {
+  router.post("/signin", authenticate, (req, res) => {
+    if (req.currentUser) {
+      const user = req.currentUser;
+      res.status(400).json({ error: `already signed in as ${user.email}.`});
+      return
+    }
     if (!Object.keys(req.body).length) {
       res.status(400).send("The body of the request is empty.");
       return
     }
-    let {email, password} = req.body;
+    const {email, password} = req.body;
 
     const checkPassword = (knex, email, id, hashedPassword, bool, res) => {
       if (!bool) {
@@ -96,8 +95,11 @@ module.exports = (knex) => {
         return
       }
       if (bcrypt.compareSync(password, hashedPassword)) {
-        res.status(200);
-        res.json(id);
+        const token = jwt.sign({
+          email: email,
+          user_id: id
+        },jwtSecret);
+        res.json({token});
       } else {
         res.status(400).send("Wrong password.")
       }
