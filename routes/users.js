@@ -3,15 +3,17 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+// const config = require('./config.js')
 
 
-  router.post("/signup", (req, res) => {
-    if (!req.body) {
-      console.log("No body in the request");
-      res.status(400).send("The body of the request is empty");
-    }
+  // router.post("/signup", (req, res) => {
+  //   if (!req.body) {
+  //     console.log("No body in the request");
+  //     res.status(400).send("The body of the request is empty");
+  //   }
 
-    let {email, password} = req.body;
+  //   let {email, password} = req.body;
 
 
 /*Functions to handle user login and registration*/
@@ -57,7 +59,9 @@ const insertNewUser = (knex, email, id, password, bool, res) => {
      }, 'id')
       .then((arrayOfId) => {
         let user_id = arrayOfId[0];
-        res.json(user_id);
+        let token = jwt.sign({email:email},'secretkeyforjwt');
+        // res.json(user_id);
+        res.json({token})
       })
       .catch((err) => {
         console.log("error occured in insertNewUser:", err);
