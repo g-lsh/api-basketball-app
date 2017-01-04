@@ -3,7 +3,6 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
 
 
   router.post("/signup", (req, res) => {
@@ -58,9 +57,7 @@ const insertNewUser = (knex, email, id, password, bool, res) => {
      }, 'id')
       .then((arrayOfId) => {
         let user_id = arrayOfId[0];
-        // res.json(user_id);
-        let token = jwt.sign({email:email},'secretkeyforjwt');
-        res.json({token})
+        res.json(user_id);
       })
       .catch((err) => {
         console.log("error occured in insertNewUser:", err);
