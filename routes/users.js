@@ -5,8 +5,7 @@ const router  = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
-const authenticate = require('../authenticate/authenticate.js')
-
+const authenticate = require('../authenticate/authenticate.js');
 
 /*Functions to handle user login and registration*/
 const checkEmail  = (knex, cb, email, password, bool, res) => {
