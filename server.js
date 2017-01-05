@@ -92,7 +92,7 @@ const corsOptions = {
   app.use("/teams", require("./routes/teams")(knex));
   app.use("/players", require("./routes/players")(knex));
   app.use("/scrape", require("./routes/scrape")(knex));
-  // app.use("/custom_teams", usersRoutes(knex));
+  app.use("/custom_teams", require("./routes/custom_teams")(knex));
   // app.use("/api", apiRoutes())
 
   // Test connection

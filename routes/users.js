@@ -103,7 +103,6 @@ module.exports = (knex) => {
         res.status(400).send("Wrong password.")
       }
     }
-
     checkEmail(knex, checkPassword, email, password, true, res);
   })
 

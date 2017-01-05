@@ -2,14 +2,14 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('teams', function (table) {
     table.increments('id');
-    table.integer('api_id')
-    table.string('name')
-    table.string('nba_code')
-    table.string('location')
-    table.string('logo')
-    table.string('background')
-    table.boolean('division')
-    table.string('website')
+    table.integer('api_id');
+    table.string('name');
+    table.string('nba_code');
+    table.string('location');
+    table.string('logo');
+    table.string('background');
+    table.boolean('division');
+    table.string('website');
   });
 };
 
