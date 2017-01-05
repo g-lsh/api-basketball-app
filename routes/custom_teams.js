@@ -61,5 +61,35 @@ module.exports = (knex) => {
     }
   })
 
+
+  router.put("/:custom_team_id/:player_id/remove", authenticate, (req, res) => {
+    if (!req.currentUser) {
+      res.status(401).json({ error: 'Not logged in.'});
+      return
+    } else {
+        debugger;
+        /*Logic below works but is falty. To be modified.*/
+        const user = req.currentUser;
+        const {custom_team_id, player_id} = req.params;
+        knex('custom_teams').select('id')
+        .where('user_id', user.id)
+        .then((data) => {
+          debugger;
+          return knex('custom_team_id_to_player_id').where({
+            'custom_team_id': custom_team_id,
+            'player_id': player_id
+            })
+          .del()
+        })
+        .then((data) => {
+          debugger;
+          res.satus(201).send("player deleted from custom team.")
+        })
+        .catch((err) => {
+          res.status(500).json({ error: "Something went wrong when trying to remove player from custom team."})
+        });
+    }
+  })
+
   return router;
 }
