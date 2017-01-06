@@ -24,14 +24,14 @@ module.exports = (knex) => {
       res.status(401).json({ error: 'Not logged in.'});
       return
     } else {
-      const {custom_team_id} = req.params
+      const {custom_team_id} = req.params;
       knex('custom_team_id_to_player_id')
       .select('player_id')
       .where('custom_team_id', custom_team_id)
       .then((results) => {
         res.json(results);
       }).catch((err) => {
-        res.status(500).json({error: `something went wrong when fetching custom team ${custom_team_id} players`})
+        res.status(500).json({error: `something went wrong when fetching custom team ${custom_team_id} players`});
       })
     }
   })
@@ -91,6 +91,32 @@ module.exports = (knex) => {
         .catch((err) => {
           res.status(500).json({ error: "Something went wrong when trying to remove player from custom team."});
         });
+    }
+  })
+
+  router.put("/:custom_team_id/remove", authenticate, (req, res) => {
+    if (!req.currentUser) {
+      res.status(401).json({ error: 'Not logged in.'});
+      return
+    } else {
+        const user = req.currentUser;
+        const {custom_team_id} = req.params;
+        knex('custom_teams').select('id')
+          .where({
+            'user_id': user.id,
+            'id': custom_team_id
+          })
+          .del()
+          .then((data) => {
+            if (data) {
+              res.status(201).send("Custom team deleted from custom teams.");
+            } else {
+              res.status(401).json({ error: "The current user does not owned the specified custom team or the custom does not exist."});
+            }
+          })
+          .catch((err) => {
+            res.status(500).json({ error: "Something went wrong when trying to remove the custom team."});
+          });
     }
   })
 
