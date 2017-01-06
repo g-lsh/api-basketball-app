@@ -51,7 +51,7 @@ module.exports = (knex) => {
       .then((arrayOfId) => {
         const custom_team_id = arrayOfId[0];
         const collection = JSON.parse(players).map((player_id) => {
-          return {'player_id': player_id, 'custom_team_id': custom_team_id }
+          return {'player_id': player_id, 'custom_team_id': custom_team_id};
         })
         return knex('custom_team_id_to_player_id')
         .insert(collection)
@@ -61,32 +61,35 @@ module.exports = (knex) => {
     }
   })
 
-
   router.put("/:custom_team_id/:player_id/remove", authenticate, (req, res) => {
     if (!req.currentUser) {
       res.status(401).json({ error: 'Not logged in.'});
       return
     } else {
-        debugger;
-        /*Logic below works but is falty. To be modified.*/
         const user = req.currentUser;
         const {custom_team_id, player_id} = req.params;
         knex('custom_teams').select('id')
         .where('user_id', user.id)
         .then((data) => {
-          debugger;
-          return knex('custom_team_id_to_player_id').where({
-            'custom_team_id': custom_team_id,
-            'player_id': player_id
+          if (data.length) {
+            knex('custom_team_id_to_player_id').where({
+              'custom_team_id': custom_team_id,
+              'player_id': player_id
+              })
+            .del()
+            .then((data) => {
+              if(data) {
+                res.status(201).send("player deleted from custom team.");
+              } else {
+                  res.status(401).json({ error: "Player not in specified custom team."});
+              }
             })
-          .del()
-        })
-        .then((data) => {
-          debugger;
-          res.satus(201).send("player deleted from custom team.")
+          } else {
+              res.status(401).json({ error: "The current user is not the owner of this team."});
+          }
         })
         .catch((err) => {
-          res.status(500).json({ error: "Something went wrong when trying to remove player from custom team."})
+          res.status(500).json({ error: "Something went wrong when trying to remove player from custom team."});
         });
     }
   })
