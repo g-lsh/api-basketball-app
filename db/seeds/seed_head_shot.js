@@ -10,12 +10,12 @@ const insertHeadshot = (knex, player) => {
   })
   .then((args) => {
     debugger;
-    console.log("Headshot inserted into teams")
+    console.log("Headshot inserted into teams");
   })
   .catch((err) => {
     debugger;
-    console.log("error occured:", err)
+    console.log("error occured:", err);
   })
 }
 
-module.exports = insertHeadshot
+module.exports = insertHeadshot;
