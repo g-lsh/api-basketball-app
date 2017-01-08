@@ -9,20 +9,20 @@ const router  = express.Router();
 
 const insertHeadshot = (knex, player) => {
   knex("players")
-    .where({
-      first_name: player.first_name,
-      last_name: player.last_name
-    })
-    .update({
-      head_shot: player.headshot
-    })
-    .then((args) => {
-      console.log("Headshot inserted into teams")
-    })
-    .catch((err) => {
-      console.log("error occured:", err)
-    })
-  }
+  .where({
+    first_name: player.first_name,
+    last_name: player.last_name
+  })
+  .update({
+    head_shot: player.headshot
+  })
+  .then((args) => {
+    console.log("Headshot inserted into teams")
+  })
+  .catch((err) => {
+    console.log("error occured:", err)
+  })
+}
 
 
 module.exports = (knex) => {
@@ -60,7 +60,7 @@ module.exports = (knex) => {
           insertHeadshot(knex, player);
         })
       return unhandled_players;
-      } 
+      }
 
     })
   })

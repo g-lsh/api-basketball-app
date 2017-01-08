@@ -51,9 +51,17 @@ const corsOptions = {
 //Seed teams Website
 // require('./db/seeds/seed_website.js')(knex)
 
-//Seed players headShot
+// Seed players headShot
 // require('./db/seeds/seed_head_shot.js')(knex)
 
+// Seed games
+// require('./db/seeds/seed_games.js')(knex)
+
+// Seed games home scoring
+// require('./db/seeds/seed_games_home_scoring.js')(knex);
+
+// Seed games away scoring
+// require('./db/seeds/seed_seed_games_away_scoring.js')(knex);
 
 //Connection to MongoDB
 // const {MongoClient} = require("mongodb");
@@ -93,6 +101,7 @@ const corsOptions = {
   app.use("/players", require("./routes/players")(knex));
   app.use("/scrape", require("./routes/scrape")(knex));
   app.use("/custom_teams", require("./routes/custom_teams")(knex));
+  app.use("/games", require("./routes/games")(knex));
   // app.use("/api", apiRoutes())
 
   // Test connection
@@ -104,7 +113,7 @@ const corsOptions = {
 
   // api.getTeams(knex, console.log)
   // api.getTeamStats(knex, 1610612746, null)
-  // api.getTeamBoxscore(knex, null)
+  // api.getTeamBoxscore(1610612761, 2016, console.log)
   // api.getTeamPlayers(1610612764, console.log)
   // api.getAdvancedPlayerStats(knex, 2248, null)
   // api.getPlayerVuStats(knex, 1897, null)

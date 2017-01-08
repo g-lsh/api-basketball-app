@@ -20,6 +20,22 @@ const getTeams = (callback) => {
   });
 }
 
+const getGames = (season, callback) => {
+  return axios({
+    method: 'post',
+    url: '/game',
+      params: {
+      api_key: apiKey,
+      season: season
+      },
+    baseURL: baseUrl
+    }).then((response) => {
+      callback(response.data);
+    }).catch(function (error) {
+      console.log(error);
+  });
+}
+
 const getTeamPlayers = (team_id, callback) => {
   return axios({
     method: 'post',
@@ -47,8 +63,27 @@ const getPlayerBoxscore = (team_id, player_id, season, callback) => {
       season: season
       },
     baseURL: baseUrl
-    }).then((response) => {
+    })
+    .then((response) => {
       callback(response.data);
+    });
+}
+
+
+const getTeamBoxscore = (team_id, season, callback) => {
+  return axios({
+    method: 'post',
+    url: `/boxscore/team`,
+      params: {
+      api_key: apiKey,
+      opponent_id: team_id,
+      season: 2016
+      },
+    baseURL: baseUrl
+    }).then((response) => {
+      callback(response.data)
+    }).catch(function (error) {
+      console.log(error);
     });
 }
 
@@ -89,24 +124,6 @@ const getPlayerBoxscore = (team_id, player_id, season, callback) => {
 //   });
 // }
 
-// const getTeamBoxscore = (knex, callback) => {
-
-//   axios({
-//   method: 'post',
-//   url: `/boxscore/team`,
-//     params: {
-//     api_key: apiKey,
-//     team_id: 1610612746,
-//     opponent_id:1610612744
-//     },
-//   baseURL: baseUrl
-//   }).then((response) => {
-//     // callback(response.data)
-//     console.log("data from getTeamBoxscore:", response.data)
-//   }).catch(function (error) {
-//     console.log(error);
-//   });
-// }
 
 
 
@@ -151,7 +168,9 @@ const getPlayerBoxscore = (team_id, player_id, season, callback) => {
 module.exports = {
   getTeams: getTeams,
   getTeamPlayers: getTeamPlayers,
-  getPlayerBoxscore: getPlayerBoxscore
+  getPlayerBoxscore: getPlayerBoxscore,
+  getGames: getGames,
+  getTeamBoxscore: getTeamBoxscore
 }
 
 
