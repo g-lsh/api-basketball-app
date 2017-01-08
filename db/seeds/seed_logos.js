@@ -2,10 +2,10 @@ const logo = "http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/t
 
 const insertLogo = (knex) => {
   knex("teams")
-    .update({logo:logo})
-    .then((args) => {
-      console.log("Logo Inserted into teams")
-    })
+  .update({logo:logo})
+  .then((args) => {
+    console.log("Logo Inserted into teams");
+  })
 }
 
-module.exports = insertLogo
+module.exports = insertLogo;

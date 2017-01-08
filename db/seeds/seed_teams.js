@@ -12,21 +12,21 @@ const mapperFunction = (teamJSON) => {
 }
 
 const insertTeams = (knex, teamsJSON) => {
-  let collection = teamsJSON.map(mapperFunction)
+  let collection = teamsJSON.map(mapperFunction);
 
   knex
   .insert(collection, '*')
   .into("teams")
   .then(function(args) {
-    console.log("Teams inserted into database")
+    console.log("Teams inserted into database");
   }).catch(function(err) {
-    console.log(err)
+    console.log(err);
   })
 }
 
 module.exports = function(knex) {
 
   api.getTeams((teamsJSON) => {
-    let teamsRecord = insertTeams(knex, teamsJSON)
+    let teamsRecord = insertTeams(knex, teamsJSON);
   })
 }

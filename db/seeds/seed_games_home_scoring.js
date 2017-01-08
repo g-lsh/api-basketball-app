@@ -4,21 +4,21 @@ const insertGameHomeScoring = (knex, gamesJSON) => {
   debugger;
   gamesJSON.forEach((game) => {
     knex('games')
-      .where({
-        id: game.game_id,
-        home_id: game.team_id
-      })
-      .update({
-        home_score: game.pts,
-      })
-      .then((data) => {
-        console.log('Home scoring inserted into database.')
-      })
-      .catch((data) => {
-        throw err;
-      })
+    .where({
+      id: game.game_id,
+      home_id: game.team_id
     })
-  }
+    .update({
+      home_score: game.pts,
+    })
+    .then((data) => {
+      console.log('Home scoring inserted into database.');
+    })
+    .catch((data) => {
+      throw err;
+    })
+  })
+}
 
 module.exports = function(knex) {
 
@@ -26,7 +26,7 @@ module.exports = function(knex) {
   const fetchGamesHomeScoring = (teamIdsArray) => {
     teamIdsArray.forEach((teamIdObject) => {
       api.getTeamBoxscore(teamIdObject.api_id, 2016, (gamesJSON) => {
-        let playersRecord = insertGameHomeScoring(knex, gamesJSON)
+        let playersRecord = insertGameHomeScoring(knex, gamesJSON);
       })
     })
   }
@@ -34,6 +34,6 @@ module.exports = function(knex) {
   knex('teams')
     .select('api_id')
     .then((teamIdsArray) => {
-      fetchGamesHomeScoring(teamIdsArray)
+      fetchGamesHomeScoring(teamIdsArray);
     })
   }

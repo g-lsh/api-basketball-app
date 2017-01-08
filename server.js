@@ -64,7 +64,7 @@ const corsOptions = {
 // require('./db/seeds/seed_seed_games_away_scoring.js')(knex);
 
 //Seed teams Twitter
-require('./db/seeds/seed_teams_twitter.js')(knex);
+// require('./db/seeds/seed_teams_twitter.js')(knex);
 
 //Connection to MongoDB
 // const {MongoClient} = require("mongodb");

@@ -28,4 +28,4 @@ const insertWebsite = (knex) => {
   })
 }
 
-module.exports = insertWebsite
+module.exports = insertWebsite;

@@ -2,10 +2,10 @@ const background = "https://images.trvl-media.com/hotels/15000000/14770000/14762
 
 const insertBackground = (knex) => {
   knex("teams")
-    .update({background:background})
-    .then((args) => {
-      console.log("Background Inserted into teams")
-    })
+  .update({background:background})
+  .then((args) => {
+    console.log("Background Inserted into teams")
+  })
 }
 
 module.exports = insertBackground

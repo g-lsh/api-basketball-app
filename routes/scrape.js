@@ -8,7 +8,7 @@ const router  = express.Router();
 
 
 const insertHeadshot = (knex, player) => {
-  knex("players")
+  knex('players')
   .where({
     first_name: player.first_name,
     last_name: player.last_name
@@ -21,6 +21,38 @@ const insertHeadshot = (knex, player) => {
   })
   .catch((err) => {
     console.log("error occured:", err)
+  })
+}
+
+const insertTeamLogo = (knex, team) => {
+  knex('teams')
+  .where({
+    id: team.id
+  })
+  .update({
+    logo: team.logo
+  })
+  .then((args) => {
+    console.log("Logo inserted into teams")
+  })
+  .catch((err) => {
+    console.log("error occured when trying to insert logos:", err)
+  })
+}
+
+const insertTeamBackground = (knex, team) => {
+  knex('teams')
+  .where({
+    id: team.id
+  })
+  .update({
+    background: team.background
+  })
+  .then((args) => {
+    console.log("Background inserted into teams")
+  })
+  .catch((err) => {
+    console.log("error occured when trying to insert backgrounds:", err)
   })
 }
 
@@ -64,5 +96,57 @@ module.exports = (knex) => {
 
     })
   })
+
+  router.get('/logos', (req, res) => {
+
+    const fetchLogo = (url, teamId) => {
+      request(url, (error, response, html) => {
+        if(!error) {
+
+          let $ = cheerio.load(html);
+
+          $('.ProfileAvatar-image').filter(function() {
+            let data = $(this);
+            let logo = data.attr('src');
+
+            let team = {logo, id: teamId};
+            insertTeamLogo(knex, team);
+          })
+        }
+      })
+    }
+
+    knex('teams').select('twitter', 'id')
+    .then((teamsArray) => {
+      teamsArray.forEach((team) => {
+        fetchLogo(team.twitter, team.id);
+      })
+    })
+  })
+
+  router.get('/backgrounds', (req, res) => {
+    const fetchBackground = (url, teamId) => {
+      request(url, (error, response, html) => {
+        if(!error) {
+          let $ = cheerio.load(html);
+          $('.ProfileCanopy-headerBg').filter(function() {
+            let data = $(this);
+            let background = data.children('img').attr('src');
+            let team = {background, id: teamId};
+            insertTeamBackground(knex, team);
+          })
+        }
+      })
+    }
+
+    knex('teams').select('twitter', 'id')
+    .then((teamsArray) => {
+      teamsArray.forEach((team) => {
+        fetchBackground(team.twitter, team.id)
+      })
+    })
+  })
+
+
   return router;
 }

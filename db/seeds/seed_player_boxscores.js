@@ -33,22 +33,23 @@ const insertPlayerBoxscores = (knex, playerBoxscoresJSON) => {
   let player_api_id = playerBoxscoresJSON[0].player_id
 
   knex('players')
-    .select('id', 'team_id')
-    .where('api_id', player_api_id)
-    .then((playerIdArray) => {
-      let player_id = playerIdArray[0].id
-      let team_id = playerIdArray[0].team_id
-      let collection = mapperFunction(player_id, team_id, playerBoxscoresJSON)
-        return knex('player_stats_per_game')
-          .insert(collection)
-          .then((data) => {
-            console.log("Player stats inserted into the database")
-            return null;
-          }).catch((err) => {
-            console.log("This is the error:", err)
-            })
-    })
-} 
+  .select('id', 'team_id')
+  .where('api_id', player_api_id)
+  .then((playerIdArray) => {
+    let player_id = playerIdArray[0].id
+    let team_id = playerIdArray[0].team_id
+    let collection = mapperFunction(player_id, team_id, playerBoxscoresJSON)
+      return knex('player_stats_per_game')
+        .insert(collection)
+        .then((data) => {
+          console.log("Player stats inserted into the database")
+          return null;
+        })
+        .catch((err) => {
+          console.log("This is the error:", err)
+        })
+  })
+}
 
 
 module.exports = function(knex) {
@@ -57,20 +58,21 @@ module.exports = function(knex) {
 
     if (times === 0) {return playersApiIdsArray}
 
-    let errors = []
+    let errors = [];
 
     let firedCalls = playersApiIdsArray.map((playerApiIdObject) => {
-      let player_api_id = playerApiIdObject.api_id
+      let player_api_id = playerApiIdObject.api_id;
 
       return api.getPlayerBoxscore(null, player_api_id, 2016, (playerBoxscoresJSON) => {
         if (playerBoxscoresJSON.length !== 0) {
           let playerBoxscoresRecord = insertPlayerBoxscores(knex, playerBoxscoresJSON)
         } else {
-          console.log("Empty array")
+          console.log("Empty array");
         }
-      }).catch((resp) => {
-          errors.push(playerApiIdObject)
-        })
+      })
+      .catch((resp) => {
+        errors.push(playerApiIdObject);
+      })
     })
 
     Promise.all(firedCalls).then(() => {
@@ -81,11 +83,10 @@ module.exports = function(knex) {
   }
 
   knex('players')
-    .select('api_id')
-    .then((playersApiIdsArray) => {
-      let result = fetchPlayerBoxscores(playersApiIdsArray)
-      console.log(result)
-      return result
-    })
-
-  }
+  .select('api_id')
+  .then((playersApiIdsArray) => {
+    let result = fetchPlayerBoxscores(playersApiIdsArray);
+    console.log(result);
+    return result
+  })
+}
