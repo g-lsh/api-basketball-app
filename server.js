@@ -63,6 +63,9 @@ const corsOptions = {
 // Seed games away scoring
 // require('./db/seeds/seed_seed_games_away_scoring.js')(knex);
 
+//Seed teams Twitter
+require('./db/seeds/seed_teams_twitter.js')(knex);
+
 //Connection to MongoDB
 // const {MongoClient} = require("mongodb");
 // const MONGODB_URI = "mongodb://localhost:27017/basketball"
