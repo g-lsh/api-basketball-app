@@ -22,6 +22,7 @@ const insertGameHomeScoring = (knex, gamesJSON) => {
 
 module.exports = function(knex) {
 
+/*Before running, check that getTeamBoxscore is set for team_id*/
   const fetchGamesHomeScoring = (teamIdsArray) => {
     teamIdsArray.forEach((teamIdObject) => {
       api.getTeamBoxscore(teamIdObject.api_id, 2016, (gamesJSON) => {
