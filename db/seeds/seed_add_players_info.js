@@ -66,7 +66,7 @@ const insertPlayersInfo = (knex, playersData) => {
 
 module.exports = function(knex) {
 
-  api((playersData) => {
+  api.fetchPlayersInfo((playersData) => {
     let playersRecord = insertPlayersInfo(knex, playersData);
   })
 }
