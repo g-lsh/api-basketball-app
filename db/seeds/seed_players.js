@@ -2,6 +2,7 @@ const api = require('../../nbaApi/nbaApi.js')
 
 const mapperFunction = (team_id, playersJSON) => {
   let collection = playersJSON.map((playerJSON) => {
+    /*Error below: playerJSON.birthdate is not defined. replace by playerJSON.birth_date.*/
     return {
       api_id: playerJSON.id,
       team_id: team_id,
@@ -44,6 +45,6 @@ module.exports = function(knex) {
   knex('teams')
   .select('api_id')
   .then((teamIdsArray) => {
-    fetchPlayerData(teamIdsArray)
+    fetchPlayerData(teamIdsArray);
   })
 }

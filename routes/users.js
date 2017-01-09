@@ -13,28 +13,28 @@ const checkEmail  = (knex, cb, email, password, bool, res) => {
   let user_id = null;
   let hashedPassword = null;
   knex('users')
-    .select('id', 'email', 'password')
-    .where('email', email)
-    .then((userArray) => {
-      if (userArray[0]) {
-        existingEmail = userArray[0].email;
-        user_id = userArray[0].id;
-        hashedPassword = userArray[0].password;
-      }
-      if (existingEmail) {
-        if (bool) {
-          cb(knex, existingEmail, user_id, hashedPassword, true, res);
-        } else {
-          cb(knex, email, null, null, false, res);
-        }
+  .select('id', 'email', 'password')
+  .where('email', email)
+  .then((userArray) => {
+    if (userArray[0]) {
+      existingEmail = userArray[0].email;
+      user_id = userArray[0].id;
+      hashedPassword = userArray[0].password;
+    }
+    if (existingEmail) {
+      if (bool) {
+        cb(knex, existingEmail, user_id, hashedPassword, true, res);
       } else {
-          if (bool) {
-            cb(knex, email, null, null, false, res);
-          } else {
+        cb(knex, email, null, null, false, res);
+      }
+    } else {
+        if (bool) {
+          cb(knex, email, null, null, false, res);
+        } else {
             cb(knex, email, null, password, true, res);
-          }
         }
-    });
+    }
+  });
 }
 
 const insertNewUser = (knex, email, id, password, bool, res) => {
@@ -43,23 +43,23 @@ const insertNewUser = (knex, email, id, password, bool, res) => {
     return
   } else {
     knex('users')
-      .insert({
-       email: email,
-       password: bcrypt.hashSync(password, 10)
-     }, 'id')
-      .then((arrayOfId) => {
-        const user_id = arrayOfId[0];
-        const token = jwt.sign({
-          email: email,
-          user_id: user_id
-        },jwtSecret);
-        res.json({token});
-      })
-      .catch((err) => {
-        console.log("error occured in insertNewUser:", err);
-        /*return something, have to implement error handling*/;
-      });
-    }
+    .insert({
+     email: email,
+     password: bcrypt.hashSync(password, 10)
+   }, 'id')
+    .then((arrayOfId) => {
+      const user_id = arrayOfId[0];
+      const token = jwt.sign({
+        email: email,
+        user_id: user_id
+      },jwtSecret);
+      res.json({token});
+    })
+    .catch((err) => {
+      console.log("error occured in insertNewUser:", err);
+      /*return something, have to implement error handling*/;
+    });
+  }
 }
 
 /*-----------------------------------------------------------------------*/
