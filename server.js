@@ -70,7 +70,7 @@ const corsOptions = {
 // require('./db/seeds/seed_add_players_info.js')(knex);
 
 //Seed empty boxscores
-require('./db/seeds/seed_players_empty_boxscores.js')(knex);
+// require('./db/seeds/seed_players_empty_boxscores.js')(knex);
 
 
 app.use(cors());
