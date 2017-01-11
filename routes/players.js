@@ -76,7 +76,9 @@ module.exports = (knex) => {
 
     let unplayedGames = knex.select('*').from(playerGames).whereNotIn('player_games.team_game_id', playedGames)
 
-    let allGames = Promise.all([playerStats, unplayedGames]).then(values => console.log(values[0].concat(values[1]).filter(el => el.home_score !== null)))
+    let allGames = Promise.all([playerStats, unplayedGames]).then(values => {
+      res.json(values[0].concat(values[1]).filter(el => el.home_score !== null))
+    })
 
 
   })
