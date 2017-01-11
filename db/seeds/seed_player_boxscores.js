@@ -54,7 +54,7 @@ const insertPlayerBoxscores = (knex, playerBoxscoresJSON) => {
 
 module.exports = function(knex) {
 
-  const fetchPlayerBoxscores = (playersApiIdsArray, times = 4) => {
+  const fetchPlayerBoxscores = (playersApiIdsArray, times = 5) => {
 
     if (times === 0) {return playersApiIdsArray}
 

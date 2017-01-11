@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema.table('games', function(table){
-    table.increment('id');
+    table.increments('id');
     table.integer('team_A_id');
     table.integer('team_B_id');
     table.dropColumn('home_id');

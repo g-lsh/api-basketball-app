@@ -43,6 +43,7 @@ module.exports = (knex) => {
     let playerStats = knex('player_stats_per_game')
       .where('player_id', player_id)
       .innerJoin('games', 'games.id', 'player_stats_per_game.game_id')
+      .innerJoin('teams', 'player_stats_per_game.team_id', 'teams.id')
       // .leftOuterJoin('teams', function() {
       //   this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
       // })

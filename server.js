@@ -51,9 +51,6 @@ const corsOptions = {
 //Seed teams Website
 // require('./db/seeds/seed_website.js')(knex)
 
-// Seed players headShot
-// require('./db/seeds/seed_head_shot.js')(knex)
-
 // Seed games
 // require('./db/seeds/seed_games.js')(knex)
 
@@ -69,8 +66,18 @@ const corsOptions = {
 //Seed add player info
 // require('./db/seeds/seed_add_players_info.js')(knex);
 
-//Seed empty boxscores
-// require('./db/seeds/seed_players_empty_boxscores.js')(knex);
+//Seed home internal ids
+// require('./db/seeds/seed_games_internal_home_ids.js')(knex);
+
+//Seed home nba code
+// require('./db/seeds/seed_games_internal_home_nba_code.js')(knex);
+
+//Seed away nba code
+// require('./db/seeds/seed_games_away_nba_code.js')(knex);
+
+//Seed away internal ids
+require('./db/seeds/seed_games_away_internal_ids.js')(knex);
+
 
 
 app.use(cors());
