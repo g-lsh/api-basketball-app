@@ -96,7 +96,7 @@ module.exports = (knex) => {
             .del()
             .then((data) => {
               if(data) {
-                res.json({id: custom_team_id})
+                res.status(201).json({id: custom_team_id})
               } else {
                   res.status(401).json({ error: "Player not in specified custom team."});
               }
@@ -134,7 +134,7 @@ module.exports = (knex) => {
                   knex('custom_team_id_to_player_id')
                   .insert(playerInsert)
                   .then((data) => {
-                    res.status(201).json({ success: `Player with id: ${player_id} added to custom team.`})
+                    res.status(201).json({ success: `Player with id: ${player_id} added to custom team.`, id: custom_team_id })
                   })
                   .catch((err) => {
                     res.status(500).json({ error: "Something went wrong when trying to add player to custom team."});
