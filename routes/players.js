@@ -62,7 +62,11 @@ module.exports = (knex) => {
       'games.home_id as home_id',
       'games.away_id as away_id',
       'games.home_score as home_score',
-      'games.away_score as away_score'
+      'games.away_score as away_score',
+      'games.away_internal_id as away_internal_id',
+      'games.away_nba_code as away_nba_code',
+      'games.home_nba_code as home_nba_code',
+      'games.home_internal_id as home_internal_id'
       )
     .innerJoin('teams', 'teams.id', 'players.team_id')
     .innerJoin('games', function() {

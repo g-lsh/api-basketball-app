@@ -76,9 +76,7 @@ const corsOptions = {
 // require('./db/seeds/seed_games_away_nba_code.js')(knex);
 
 //Seed away internal ids
-require('./db/seeds/seed_games_away_internal_ids.js')(knex);
-
-
+// require('./db/seeds/seed_games_away_internal_ids.js')(knex);
 
 app.use(cors());
 
