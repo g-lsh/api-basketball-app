@@ -90,21 +90,21 @@ module.exports = (knex) => {
 
 
 
-let playerGames = knex('players').select('players.id as player_id', 'teams.api_id as team_api_id', 'teams.id as team_id', 'games.id as team_game_id', 'games.date as date')
-.innerJoin('teams', 'teams.id', 'players.team_id')
-.innerJoin('games', function() {
-  this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
-})
-.where('players.id', '96')
-.as('player_games')
+// let playerGames = knex('players').select('players.id as player_id', 'teams.api_id as team_api_id', 'teams.id as team_id', 'games.id as team_game_id', 'games.date as date')
+// .innerJoin('teams', 'teams.id', 'players.team_id')
+// .innerJoin('games', function() {
+//   this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
+// })
+// .where('players.id', '96')
+// .as('player_games')
 
-const playedGames = knex('player_stats_per_game')
-.where('player_id', '96')
-.select('game_id')
+// const playedGames = knex('player_stats_per_game')
+// .where('player_id', '96')
+// .select('game_id')
+// // .then((data) => console.log(data))
+
+// knex.select('*').from(playerGames).whereNotIn('player_games.team_game_id', playedGames)
 // .then((data) => console.log(data))
-
-knex.select('*').from(playerGames).whereNotIn('player_games.team_game_id', playedGames)
-.then((data) => console.log(data))
 
 // knex.select('*')
 // .from('player_stats_per_game')
