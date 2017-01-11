@@ -67,7 +67,7 @@ module.exports = (knex) => {
     .innerJoin('games', function() {
       this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
     })
-    .where('players.id', '96')
+    .where('players.id', player_id)
     .as('player_games')
 
     const playedGames = knex('player_stats_per_game')
