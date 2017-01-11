@@ -96,8 +96,7 @@ module.exports = (knex) => {
             .del()
             .then((data) => {
               if(data) {
-                knex('custom_teams').select('id').where('custom_team.id', custom_team_id)
-                .then(data => res.status(201).json(data[0]))
+                res.json({id: custom_team_id})
               } else {
                   res.status(401).json({ error: "Player not in specified custom team."});
               }

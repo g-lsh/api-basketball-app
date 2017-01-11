@@ -43,9 +43,9 @@ module.exports = (knex) => {
     knex('player_stats_per_game')
       .where('player_id', player_id)
       .leftOuterJoin('games', 'games.id', 'player_stats_per_game.game_id')
-      .leftOuterJoin('teams', function() {
-        this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
-      })
+      // .leftOuterJoin('teams', function() {
+      //   this.on('games.home_id', '=', 'teams.api_id').orOn('games.away_id', '=', 'teams.api_id')
+      // })
       // .innerJoin('teams', 'games.home_id', 'teams.api_id')
       // .innerJoin('teams', 'games.away_id', 'teams.api_id')
       .orderBy('date')
