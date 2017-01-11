@@ -5,7 +5,7 @@ const parseString = require('xml2js').parseString;
 
 const baseUrl = 'https://www.fantasybasketballnerd.com/service';
 
-const fecthPlayersInfo = (cb) => {
+const fetchPlayersInfo = (cb) => {
   return axios({
     method: 'post',
     url: `/players`,
@@ -23,11 +23,10 @@ const fecthPlayersInfo = (cb) => {
     .catch(function (error) {
       console.log(error);
     });
-  })
 }
 
 
-const fecthTeamsInfo = (cb) => {
+const fetchTeamsInfo = (cb) => {
   return axios({
     method: 'post',
     url: `/teams`,
@@ -45,10 +44,9 @@ const fecthTeamsInfo = (cb) => {
     .catch(function (error) {
       console.log(error);
     });
-  })
 }
 
 module.exports = {
-  fecthPlayersInfo: fecthPlayersInfo,
-  fecthTeamsInfo: fecthTeamsInfo
+  fetchPlayersInfo: fetchPlayersInfo,
+  fetchTeamsInfo: fetchTeamsInfo
 }

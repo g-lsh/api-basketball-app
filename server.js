@@ -69,6 +69,9 @@ const corsOptions = {
 //Seed add player info
 // require('./db/seeds/seed_add_players_info.js')(knex);
 
+//Seed empty boxscores
+// require('./db/seeds/seed_players_empty_boxscores.js')(knex);
+
 
 app.use(cors());
 
@@ -108,7 +111,7 @@ app.get("/", (req, res) => {
 
 // require('./db/seeds/test.js')(knex)
 // require('./nbaApi/XMLapi.js')(console.log);
-require('./nbaApi/XMLapi.js').fetchTeamsInfo(console.log);
+// require('./nbaApi/XMLapi.js').fetchTeamsInfo(console.log);
 // api.getTeams(knex, console.log)
 // api.getTeamStats(knex, 1610612746, null)
 // api.getTeamBoxscore(1610612761, 2016, console.log)
