@@ -57,7 +57,7 @@ const insertNewUser = (knex, email, id, password, bool, res) => {
     })
     .catch((err) => {
       console.log("error occured in insertNewUser:", err);
-      /*return something, have to implement error handling*/;
+      res.status(500).json({ 'error': 'something went wrong with insertNewUser'})
     });
   }
 }

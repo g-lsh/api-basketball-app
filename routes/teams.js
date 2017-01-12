@@ -7,13 +7,12 @@ module.exports = (knex) => {
 
   router.get("/", (req, res) => {
     knex
-      .select("*")
-      .from("teams")
-      .then((results) => {
-        res.json(results);
-    }).catch((err) => {
-      throw err
+    .select("*")
+    .from("teams")
+    .then((results) => {
+      res.json(results);
     })
+    .catch(err => res.status(500).json({'error': 'Something went wrong when retrieving teams.'}))
   })
 
 
@@ -25,9 +24,10 @@ module.exports = (knex) => {
     const team_id = req.params.team_id
 
     knex('players').where('team_id', team_id)
-      .then((results) => {
-      res.json(results)
+    .then((results) => {
+      res.status(200).json(results)
     })
+    .catch(err => res.status(500).json({'error': 'Something went wrong when retrieving players.'}))
   })
 
 

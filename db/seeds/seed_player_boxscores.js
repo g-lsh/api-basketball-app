@@ -22,7 +22,8 @@ const mapperFunction = (player_id, team_id, playerBoxscoresJSON) => {
       STL: playerBoxscoreJSON.stl,
       BLK: playerBoxscoreJSON.blk,
       PF: playerBoxscoreJSON.pf,
-      PTS: playerBoxscoreJSON.pts
+      PTS: playerBoxscoreJSON.pts,
+      MIN: playerBoxscoreJSON.min
     }
   })
   return collection
