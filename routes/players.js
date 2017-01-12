@@ -10,15 +10,15 @@ module.exports = (knex) => {
     const player_id = req.params.player_id
 
     knex('players')
-      .select("*")
-      .where("id", player_id)
-      .then((results) => {
-        res.json(results);
-    }).catch((err) => {
-      throw err
+    .select("*")
+    .where("id", player_id)
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      res.satus(500).json({'error': 'Something went wrong when retrieving player info'})
     })
   })
-
 
 //Route for to obtain all boxscore for a give player
 
@@ -63,8 +63,6 @@ module.exports = (knex) => {
     let allGames = Promise.all([playerStats, unplayedGames]).then(values => {
       res.json(values[0].concat(values[1]).filter(el => el.home_score !== null))
     })
-
-
   })
 
   return router;
