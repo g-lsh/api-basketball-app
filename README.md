@@ -17,19 +17,19 @@ Note: this project is not a final product.
 Seeding order:
 
 A) STATS:
-  1) Seed teams.
-  2) Seed players.
-  3) Seed player boxscores.
-  4) Seed games.
-  5) Seed home scoring.
-  6) Seed away scoring.
-  7) Seed Home internal Ids.
-  8) Seed away internal Ids.
-  9) Seed home NBA code.
-  10) Seed away nba code.
+ - 1) Seed teams.
+ - 2) Seed players.
+ - 3) Seed player boxscores.
+ - 4) Seed games.
+ - 5) Seed home scoring.
+ - 6) Seed away scoring.
+ - 7) Seed Home internal Ids.
+ - 8) Seed away internal Ids.
+ - 9) Seed home NBA code.
+ - 10) Seed away nba code.
 
 B) Additional team info:
-  1) Seed twitters.
+   - 1) Seed twitters.
   Seed all following one at a time, in no particular order:
    - Seed teams twitter.
    - Seed teams website
@@ -41,7 +41,7 @@ Seed in no particular order, one a time
 - Seed additional info from FantasybasketballNerd
 - Seed player individual headshot (scrape ran through route)
 
-7. Install react front end server from: https://github.com/g-lsh/client-side-basketball-app.
+7. Get react front end server from: https://github.com/g-lsh/client-side-basketball-app.
 8. Run the server: `npm run local` or `npm start` (cors option not necessary when running from localhost to localhost.)
 
 ## Dependencies
