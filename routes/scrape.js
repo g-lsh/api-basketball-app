@@ -58,7 +58,7 @@ const insertTeamBackground = (knex, team) => {
 
 module.exports = (knex) => {
 
-  router.get('/headshots', (req, res) => {
+  router.post('/headshots', (req, res) => {
 
     url = 'http://www.nba.com/players';
 
@@ -96,7 +96,7 @@ module.exports = (knex) => {
     })
   })
 
-  router.get('/logos', (req, res) => {
+  router.post('/logos', (req, res) => {
 
     const fetchLogo = (url, teamId) => {
       request(url, (error, response, html) => {
@@ -123,7 +123,7 @@ module.exports = (knex) => {
     })
   })
 
-  router.get('/backgrounds', (req, res) => {
+  router.post('/backgrounds', (req, res) => {
     const fetchBackground = (url, teamId) => {
       request(url, (error, response, html) => {
         if(!error) {

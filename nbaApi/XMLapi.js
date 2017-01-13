@@ -1,3 +1,4 @@
+/*free api provided by fantasybasketballnerd.com*/
 
 const axios = require('axios');
 const parseString = require('xml2js').parseString;

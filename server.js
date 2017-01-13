@@ -30,53 +30,62 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-//Seed teams
+/*Seed Stats in sequential order, one at a time.*/
+
+// 1) Seed teams
 // require('./db/seeds/seed_teams.js')(knex);
 
-// //Seed players
+// 2) Seed players
 // require('./db/seeds/seed_players.js')(knex);
 
-//Seed players boxscores
+// 3) Seed players boxscores
 // require('./db/seeds/seed_player_boxscores.js')(knex);
 
-//Seed teams logos
-// require('./db/seeds/seed_logos.js')(knex);
+// 4) Seed games
+// require('./db/seeds/seed_games.js')(knex)
 
-//Seed teams background
-// require('./db/seeds/seed_background.js')(knex);
+// 5) Seed games home scoring
+// require('./db/seeds/seed_games_home_scoring.js')(knex);
 
-//Seed teams Division
-// require('./db/seeds/seed_division.js')(knex);
+// 6) Seed games away scoring
+// require('./db/seeds/seed_seed_games_away_scoring.js')(knex);
+
+// 7) Seed home internal ids
+// require('./db/seeds/seed_games_internal_home_ids.js')(knex);
+
+// 8) Seed home nba code
+// require('./db/seeds/seed_games_internal_home_nba_code.js')(knex);
+
+// 9) Seed away nba code
+// require('./db/seeds/seed_games_away_nba_code.js')(knex);
+
+// 10) Seed away internal ids
+// require('./db/seeds/seed_games_away_internal_ids.js')(knex);
+
+/*Seed additional team info, tweeters must be first, other in no particular order.*/
+
+// 1) Seed teams Twitter
+// require('./db/seeds/seed_teams_twitter.js')(knex);
 
 //Seed teams Website
 // require('./db/seeds/seed_website.js')(knex)
 
-// Seed games
-// require('./db/seeds/seed_games.js')(knex)
+//Seed teams Division
+// require('./db/seeds/seed_division.js')(knex);
 
-// Seed games home scoring
-// require('./db/seeds/seed_games_home_scoring.js')(knex);
+// Seed teams logos
+// access route POST /scrape/logos via browser/postman etc...
 
-// Seed games away scoring
-// require('./db/seeds/seed_seed_games_away_scoring.js')(knex);
+//Seed teams background
+// access route POST /scrape/background via browser/postman etc...
 
-//Seed teams Twitter
-// require('./db/seeds/seed_teams_twitter.js')(knex);
+/*Seed additional player info from FantasyBasketball Nerd*/
 
 //Seed add player info
 // require('./db/seeds/seed_add_players_info.js')(knex);
 
-//Seed home internal ids
-// require('./db/seeds/seed_games_internal_home_ids.js')(knex);
-
-//Seed home nba code
-// require('./db/seeds/seed_games_internal_home_nba_code.js')(knex);
-
-//Seed away nba code
-// require('./db/seeds/seed_games_away_nba_code.js')(knex);
-
-//Seed away internal ids
-// require('./db/seeds/seed_games_away_internal_ids.js')(knex);
+//Seed player individual headshot
+//acces route POST scrape/headshots.
 
 app.use(cors());
 
@@ -92,13 +101,7 @@ app.use(knexLogger(knex));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use("/styles", sass({
-//   src: __dirname + "/styles",
-//   dest: __dirname + "/public/styles",
-//   debug: true,
-//   outputStyle: 'expanded'
-// }));
-// app.use(express.static("public"));
+
 
 // Mount all resource routes
 app.use("/users", require("./routes/users")(knex));
@@ -107,24 +110,11 @@ app.use("/players", require("./routes/players")(knex));
 app.use("/scrape", require("./routes/scrape")(knex));
 app.use("/custom_teams", require("./routes/custom_teams")(knex));
 app.use("/games", require("./routes/games")(knex));
-// app.use("/api", apiRoutes())
 
 // Test connection
 app.get("/", (req, res) => {
   res.status(200).send("Connection established!");
 });
-
-// require('./db/seeds/test.js')(knex)
-// require('./nbaApi/XMLapi.js')(console.log);
-// require('./nbaApi/XMLapi.js').fetchTeamsInfo(console.log);
-// api.getTeams(knex, console.log)
-// api.getTeamStats(knex, 1610612746, null)
-// api.getTeamBoxscore(1610612761, 2016, console.log)
-// api.getTeamPlayers(1610612764, console.log)
-// api.getAdvancedPlayerStats(knex, 2248, null)
-// api.getPlayerVuStats(knex, 1897, null)
-// api.getPlayerBoxscore(1610612764, null, 2016, console.log)
-// }
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
